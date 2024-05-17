@@ -1,0 +1,367 @@
+# 代理集合（获取机场订阅链接内的所有节点）
+proxy-providers:
+  🛫 v2ss:
+    type: http
+    # 机场订阅链接，使用 Clash 链接
+    url: "https://fetch.v2ss.men/clashmeta.php?sid=66233&token=s2sKzwaRO6aL"
+    path: ./proxies/airport1.yaml
+    interval: 86400
+    # 初步筛选需要的节点，可有效减轻路由器压力，支持正则表达式，不筛选可删除此配置项
+    # filter: "(?i)港|hk|hongkong|hong kong|台|tw|taiwan|日本|jp|japan|新|sg|singapore|美|us|unitedstates|united states"
+    # 初步排除不需要的节点，支持正则表达式，若不排除可删除此配置项
+    # exclude-filter: "高倍|×10"
+    health-check:
+      enable: true
+      url: https://www.gstatic.com/generate_204
+      interval: 600
+
+# 单个出站代理节点（以 vless 为例）
+# proxies:
+#   - name: 🆓 免费节点
+#     type: vless
+#     server: example.com
+#     port: 443
+#     uuid: {uuid}
+#     network: ws
+#     tls: true
+#     udp: false
+#     sni: example.com
+#     client-fingerprint: chrome
+#     ws-opts:
+#       path: "/?ed=2048"
+#       headers:
+#         host: example.com
+
+# 策略组
+proxy-groups:
+  # 手动选择国家或地区节点；根据“国家或地区策略组”名称对 `proxies` 值进行增删改，须一一对应
+  - {name: 🚀 节点选择, type: select, proxies: [♻️ 自动选择, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇸 美国节点,🇬🇧 英国节点,🇷🇺 俄罗斯节点]}
+  # 若机场的 UDP 质量不是很好，导致某游戏无法登录或进入房间，可以添加 `disable-udp: true` 配置项解决
+  - {name: 人工智能, type: select, proxies: [🎯 全球直连, 🚀 节点选择, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇸 美国节点,🇬🇧 英国节点], icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Bot.png}
+  - {name: 游戏服务, type: select, proxies: [🎯 全球直连, 🚀 节点选择], icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Game.png}
+  - {name: 微软Bing, type: select, proxies: [🎯 全球直连, 🚀 节点选择], icon: https://fastly.jsdelivr.net/gh/shindgewongxj/WHATSINStash@master/icon/bing.png}
+  - {name: 微软云盘, type: select, proxies: [🎯 全球直连, 🚀 节点选择], icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/OneDrive.png}
+  - {name: Ⓜ️ 微软服务, type: select, proxies: [🎯 全球直连, 🚀 节点选择]}
+  - {name: 谷歌服务, type: select, proxies: [🎯 全球直连, 🚀 节点选择], icon: https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/google.svg}
+  - {name: 苹果服务, type: select, proxies: [🎯 全球直连, 🚀 节点选择], icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Apple_1.png}
+  - {name: 🌍 国外媒体, type: select, proxies: [🚀 节点选择, 🎯 全球直连]}
+  - {name: 🇨🇳 直连, type: select, proxies: [🎯 全球直连]}
+  - {name: 哔哩哔哩, type: select, proxies: [🎯 全球直连,🇭🇰 香港节点, 🇹🇼 台湾节点], icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/bilibili_3.png}
+  - {name: 电报消息, type: select, proxies: [🚀 节点选择,🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇸 美国节点,🇬🇧 英国节点], icon: https://fastly.jsdelivr.net/gh/shindgewongxj/WHATSINStash@master/icon/telegram.png}
+  - {name: 直连软件, type: select, proxies: [DIRECT], icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Direct.png}
+  - {name: 私有网络, type: select, proxies: [DIRECT], icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Round_Robin.png}
+  - {name: 🎯 全球直连, type: select, proxies: [DIRECT, 🚀 节点选择]}
+  - {name: 🛑 广告拦截, type: select, proxies: [REJECT]}
+  - {name: 🍃 应用净化, type: select, proxies: [REJECT]}
+  - {name: 🛡️ 隐私防护, type: select, proxies: [REJECT]}
+  - {name: 🐟 漏网之鱼, type: select, proxies: [🎯 全球直连, 🚀 节点选择,]}
+
+  - {name: ♻️ 自动选择, type: url-test, proxies: [🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇸 美国节点,🇬🇧 英国节点,🇷🇺 俄罗斯节点]}
+  # ----------------国家或地区策略组---------------------
+  # 自动选择节点，即按照 url 测试结果使用延迟最低的节点；测试后容差大于 150ms 才会切换到延迟低的那个节点；筛选出“香港”节点，支持正则表达式
+  - {name: 🇭🇰 香港节点, type: url-test, tolerance: 150, use: [🛫 v2ss], filter: "(?i)港|HK|hongkong|hong kong"}
+  # 节点负载均衡，即将请求均匀分配到多个节点上，优点是更稳定，速度可能有提升；将相同顶级域名的请求分配给策略组内的同一个代理节点；推荐在节点复用比较多的情况下使用
+  - {name: 🇹🇼 台湾节点, type: url-test, strategy: consistent-hashing, use: [🛫 v2ss], filter: "(?i)台|TW|taiwan"}
+  # 若有多个机场，可以使用 `include-all-providers: true` 代替 `use: [🛫 v2ss, ...]`
+  - {name: 🇯🇵 日本节点, type: load-balance, tolerance: 150, use: [🛫 v2ss], filter: "(?i)日本|JP|japan"}
+  - {name: 🇰🇷 韩国节点, type: url-test, tolerance: 150, use: [🛫 v2ss], filter: "(?i)韩|KR|🇰🇷"}
+  - {name: 🇸🇬 新加坡节点, type: url-test, tolerance: 150, use: [🛫 v2ss], filter: "(?i)新|SG|singapore"}
+  - {name: 🇺🇸 美国节点, type: load-balance, tolerance: 150, use: [🛫 v2ss], filter: "(?i)美|US|unitedstates|united states"}
+  - {name: 🇬🇧 英国节点, type: url-test, tolerance: 150, use: [🛫 v2ss], filter: "(?i)英|UK|united kingdom"}
+  - {name: 🇷🇺 俄罗斯节点, type: url-test, tolerance: 150, use: [🛫 v2ss], filter: "(?i)俄|RU|russian"}
+
+# 规则集（yaml 文件每天自动更新）
+rule-providers:
+# DustinWin广告合集
+  ads:
+    type: http
+    behavior: domain
+    format: text
+    path: ./rules/ads.list
+    url: "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/clash-ruleset/ads.list"
+    interval: 86400
+
+# EasyList广告列表
+  ban-easy-list:
+    type: http
+    behavior: domain
+    format: text
+    path: ./rules/ban-easy-list.list
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanEasyList.list"
+    interval: 86400
+
+# EasyListChina列表
+  ban-easy-list-china:
+    type: http
+    behavior: domain
+    format: text
+    path: ./rules/ban-easy-list-china.list
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanEasyListChina.list"
+    interval: 86400
+
+# 常用应用的各种去广告规则
+  ban-program-ad:
+    type: http
+    behavior: classical
+    format: text
+    path: ./rules/ban-program-ad.list
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanProgramAD.list"
+    interval: 86400
+
+# EasyPrivacy广告列表
+  ban-easy-privacy:
+    type: http
+    behavior: domain
+    format: text
+    path: ./rules/ban-easy-privacy.list
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanEasyPrivacy.list"
+    interval: 86400
+
+# 哔哩哔哩 港澳台番剧
+  bilibili-hmt:
+    type: http
+    behavior: domain
+    format: text
+    path: ./rules/bilibili-hmt.list
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/BilibiliHMT.list"
+    interval: 86400
+
+# Bilibili主站
+  bilibili:
+    type: http
+    behavior: domain
+    format: text
+    path: ./rules/bilibili.list
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Bilibili.list"
+    interval: 86400
+
+# 需要直连应用
+  applications:
+    type: http
+    behavior: classical
+    format: text
+    path: ./rules/applications.list
+    url: "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/clash-ruleset/applications.list"
+    interval: 86400
+
+# 微软必应
+  bing:
+    type: http
+    behavior: domain
+    format: text
+    path: ./rules/bing.list
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Bing.list"
+    interval: 86400
+
+# 微软云盘
+  onedrive:
+    type: http
+    behavior: domain
+    format: text
+    path: ./rules/onedrive.list
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/OneDrive.list"
+    interval: 86400
+
+# 微软服务
+  microsoft:
+    type: http
+    behavior: domain
+    format: text
+    path: ./rules/microsoft.list
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Microsoft.list"
+    interval: 86400
+
+# 苹果服务
+  apple-cn:
+    type: http
+    behavior: domain
+    format: text
+    path: ./rules/apple-cn.list
+    url: "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/clash-ruleset/apple-cn.list"
+    interval: 86400
+
+  google-fcm:
+    type: http
+    behavior: domain
+    format: text
+    path: ./rules/google-fcm.list
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/GoogleFCM.list"
+    interval: 86400
+
+  google-cn:
+    type: http
+    behavior: domain
+    format: text
+    path: ./rules/google-cn.list
+    url: "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/clash-ruleset/google-cn.list"
+    interval: 86400
+# 游戏直连
+  games-cn:
+    type: http
+    behavior: domain
+    format: text
+    path: ./rules/games-cn.list
+    url: "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/clash-ruleset/games-cn.list"
+    interval: 86400
+# epic游戏
+  epic:
+    type: http
+    behavior: domain
+    format: text
+    path: ./rules/epic.list
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Epic.list"
+    interval: 86400
+# origin游戏
+  origin:
+    type: http
+    behavior: domain
+    format: text
+    path: ./rules/origin.list
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Origin.list"
+    interval: 86400
+# sony游戏
+  sony:
+    type: http
+    behavior: domain
+    format: text
+    path: ./rules/sony.list
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Sony.list"
+    interval: 86400
+# steam游戏
+  steam:
+    type: http
+    behavior: domain
+    format: text
+    path: ./rules/steam.list
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Steam.list"
+    interval: 86400
+# nintendo游戏
+  nintendo:
+    type: http
+    behavior: domain
+    format: text
+    path: ./rules/nintendo.list
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Nintendo.list"
+    interval: 86400
+
+# OpenAI域名
+  open-ai:
+    type: http
+    behavior: domain
+    format: text
+    path: ./rules/open-ai.list
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/OpenAi.list"
+    interval: 86400
+
+# telegram IP集
+  telegramip:
+    type: http
+    behavior: ipcidr
+    format: text
+    path: ./rules/telegramip.list
+    url: "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/clash-ruleset/telegramip.list"
+    interval: 86400
+
+# 油管视频
+  youtube:
+    type: http
+    behavior: domain
+    format: text
+    path: ./rules/youtube.list
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/YouTube.list"
+    interval: 86400
+
+# 国外媒体
+  proxymedia:
+    type: http
+    behavior: domain
+    format: text
+    path: ./rules/proxymedia.list
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyMedia.list"
+    interval: 86400
+
+# 国外域名
+  proxy-gfw-list:
+    type: http
+    behavior: domain
+    format: text
+    path: ./rules/proxy-gfw-list.list
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyGFWlist.list"
+    interval: 86400
+
+  dir-download:
+    type: http
+    behavior: domain
+    format: text
+    path: ./rules/dir-download.list
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Download.list"
+    interval: 86400
+
+# 常见本地服务域名（openwrt等）
+  private:
+    type: http
+    behavior: domain
+    format: text
+    path: ./rules/private.list
+    url: "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/clash-ruleset/private.list"
+    interval: 86400
+
+# 私有局域网域名
+  privateip:
+    type: http
+    behavior: ipcidr
+    format: text
+    path: ./rules/privateip.list
+    url: "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/clash-ruleset/privateip.list"
+    interval: 86400
+
+# 中国域名
+  cn:
+    type: http
+    behavior: domain
+    format: text
+    path: ./rules/cn.list
+    url: "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/clash-ruleset/cn.list"
+    interval: 86400
+
+# 中国ip
+  cnip:
+    type: http
+    behavior: ipcidr
+    format: text
+    path: ./rules/cnip.list
+    url: "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/clash-ruleset/cnip.list"
+    interval: 86400
+
+rules:
+  - RULE-SET,private,私有网络
+  - RULE-SET,privateip,私有网络,no-resolve
+  - RULE-SET,ads,🛑 广告拦截
+  - RULE-SET,ban-program-ad,🍃 应用净化
+  - RULE-SET,ban-easy-privacy,🛡️ 隐私防护
+  - RULE-SET,ban-easy-list,🛡️ 隐私防护
+  - RULE-SET,ban-easy-list-china,🛡️ 隐私防护
+  - RULE-SET,applications,直连软件
+  - RULE-SET,google-fcm,谷歌服务
+  - RULE-SET,google-cn,🎯 全球直连
+  - RULE-SET,games-cn,🎯 全球直连
+  - RULE-SET,apple-cn,苹果服务
+  - RULE-SET,bing,微软Bing
+  - RULE-SET,onedrive,微软云盘
+  - RULE-SET,microsoft,Ⓜ️ 微软服务
+  - RULE-SET,epic,游戏服务
+  - RULE-SET,origin,游戏服务
+  - RULE-SET,sony,游戏服务
+  - RULE-SET,steam,游戏服务
+  - RULE-SET,nintendo,游戏服务
+  - RULE-SET,open-ai,人工智能
+  - RULE-SET,bilibili-hmt,哔哩哔哩
+  - RULE-SET,bilibili,哔哩哔哩
+  - RULE-SET,telegramip,电报消息,no-resolve
+  - RULE-SET,youtube,🌍 国外媒体
+  - RULE-SET,proxymedia,🌍 国外媒体
+  - RULE-SET,proxy-gfw-list,🚀 节点选择
+  - RULE-SET,dir-download,🎯 全球直连
+  - RULE-SET,cn,🇨🇳 直连
+  - RULE-SET,cnip,🇨🇳 直连,no-resolve
+  - MATCH,🐟 漏网之鱼

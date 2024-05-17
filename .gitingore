@@ -1,2 +1,2 @@
 # 忽略所有 .yaml 文件 
-.yaml
+*m*.yaml

@@ -1,2 +1,2 @@
-.gitingore
-mihomo.yaml
+.gitignore 
+*.yaml

@@ -1,4 +1,6 @@
-# [Rules 规则](https://a76yyyy.github.io/clash/zh_CN/configuration/rules.html)
+# [规则配置](https://hokoory.github.io/clash-mate-doc/config/rules/)
+
+## [Rules 规则](https://a76yyyy.github.io/clash/zh_CN/configuration/rules.html)
 > 在快速入手中, 我们介绍了Clash中基于规则的匹配的基本知识. 在本章中, 我们将介绍最新版本的 Clash 中所有可用的规则类型.
 
 ```list
@@ -7,56 +9,57 @@ TYPE,ARGUMENT,POLICY(,no-resolve)
 ```
 `no-resolve`选项是可选的, 它用于跳过规则的 DNS 解析. 当您想要使用 `GEOIP`、`IP-CIDR`、`IP-CIDR6`、`SCRIPT` 规则, 但又不想立即将域名解析为 IP 地址时, 这个选项就很有用了.
 
-- [Rules 规则](#rules-规则)
-  - [策略](#策略)
-  - [规则类型](#规则类型)
-    - [DOMAIN 域名](#domain-域名)
-    - [DOMAIN-SUFFIX 域名后缀](#domain-suffix-域名后缀)
-    - [DOMAIN-KEYWORD 域名关键字](#domain-keyword-域名关键字)
-    - [GEOIP IP地理位置 (国家代码)](#geoip-ip地理位置-国家代码)
-    - [IP-CIDR IPv4地址段](#ip-cidr-ipv4地址段)
-    - [IP-CIDR6 IPv6地址段](#ip-cidr6-ipv6地址段)
-    - [SRC-IP-CIDR 源IP段地址](#src-ip-cidr-源ip段地址)
-    - [SRC-PORT 源端口](#src-port-源端口)
-    - [DST-PORT 目标端口](#dst-port-目标端口)
-    - [PROCESS-NAME 源进程名](#process-name-源进程名)
-    - [PROCESS-PATH 源进程路径](#process-path-源进程路径)
-    - [IPSET IP集(*仅Linux*)](#ipset-ip集仅linux)
-    - [RULE-SET 规则集](#rule-set-规则集)
-    - [SCRIPT 脚本](#script-脚本)
-    - [MATCH 全匹配](#match-全匹配)
-- [Rule Providers 规则集](#rule-providers-规则集)
-  - [`domain`](#domain)
-  - [`ipcidr`](#ipcidr)
-  - [`classical`](#classical)
+- [规则配置](#规则配置)
+  - [Rules 规则](#rules-规则)
+    - [策略](#策略)
+    - [规则类型](#规则类型)
+      - [DOMAIN 域名](#domain-域名)
+      - [DOMAIN-SUFFIX 域名后缀](#domain-suffix-域名后缀)
+      - [DOMAIN-KEYWORD 域名关键字](#domain-keyword-域名关键字)
+      - [GEOIP IP地理位置 (国家代码)](#geoip-ip地理位置-国家代码)
+      - [IP-CIDR IPv4地址段](#ip-cidr-ipv4地址段)
+      - [IP-CIDR6 IPv6地址段](#ip-cidr6-ipv6地址段)
+      - [SRC-IP-CIDR 源IP段地址](#src-ip-cidr-源ip段地址)
+      - [SRC-PORT 源端口](#src-port-源端口)
+      - [DST-PORT 目标端口](#dst-port-目标端口)
+      - [PROCESS-NAME 源进程名](#process-name-源进程名)
+      - [PROCESS-PATH 源进程路径](#process-path-源进程路径)
+      - [IPSET IP集(*仅Linux*)](#ipset-ip集仅linux)
+      - [RULE-SET 规则集](#rule-set-规则集)
+      - [SCRIPT 脚本](#script-脚本)
+      - [MATCH 全匹配](#match-全匹配)
+  - [Rule Providers 规则集](#rule-providers-规则集)
+    - [`domain`](#domain)
+    - [`ipcidr`](#ipcidr)
+    - [`classical`](#classical)
 - [Clash DNS](#clash-dns)
   - [fake-ip](#fake-ip)
 - [参考配置](#参考配置)
 
-## 策略
+### 策略
 目前有四种策略类型, 其中:- [Rules 规则](#rules-规则)
 - DIRECT: 通过 `interface-name` 直接连接到目标 (不查找系统路由表)
 - REJECT: 丢弃数据包
 - Proxy: 将数据包路由到指定的代理服务器
 - Proxy Group: 将数据包路由到指定的策略组
 
-## 规则类型
+### 规则类型
 以下部分介绍了每种规则类型及其使用方法:
 
-### DOMAIN 域名
+#### DOMAIN 域名
 `DOMAIN,www.google.com,policy` 将 `www.google.com` 路由到 `policy`.
 
-### DOMAIN-SUFFIX 域名后缀
+#### DOMAIN-SUFFIX 域名后缀
 `DOMAIN-SUFFIX,youtube.com,policy` 将任何以 `youtube.com` 结尾的域名路由到 `policy`.
 
 在这种情况下, `www.youtube.com` 和 `foo.bar.youtube.com` 都将路由到 `policy`.
 
-### DOMAIN-KEYWORD 域名关键字
+#### DOMAIN-KEYWORD 域名关键字
 `DOMAIN-KEYWORD,google,policy` 将任何包含 `google` 关键字的域名路由到 `policy`.
 
 在这种情况下, `www.google.com` 或 `googleapis.com` 都将路由到 `policy`.
 
-### GEOIP IP地理位置 (国家代码)
+#### GEOIP IP地理位置 (国家代码)
 GEOIP 规则用于根据数据包的目标 IP 地址的**国家代码**路由数据包. Clash 使用 [MaxMind GeoLite2](https://dev.maxmind.com/geoip/geolite2-free-geolocation-data) 数据库来实现这一功能.
 
 > <font color=#d1a336> **Warning**<br>
@@ -65,7 +68,7 @@ GEOIP 规则用于根据数据包的目标 IP 地址的**国家代码**路由数
 
 `GEOIP,CN,policy` 将任何目标 IP 地址为中国的数据包路由到 `policy`.
 
-### IP-CIDR IPv4地址段
+#### IP-CIDR IPv4地址段
 IP-CIDR 规则用于根据数据包的目标 IPv4 地址路由数据包.
 
 > <font color=#d1a336> **Warning**<br>
@@ -74,7 +77,7 @@ IP-CIDR 规则用于根据数据包的目标 IPv4 地址路由数据包.
 
 `IP-CIDR,127.0.0.0/8,DIRECT` 将任何目标 IP 地址为 127.0.0.0/8 的数据包路由到 `DIRECT`.
 
-### IP-CIDR6 IPv6地址段
+#### IP-CIDR6 IPv6地址段
 IP-CIDR6 规则用于根据数据包的目标 IPv6 地址路由数据包.
 
 > <font color=#d1a336> **Warning**<br>
@@ -83,22 +86,22 @@ IP-CIDR6 规则用于根据数据包的目标 IPv6 地址路由数据包.
 
 `IP-CIDR6,2620:0:2d0:200::7/32,policy` 将任何目标 IP 地址为 2620:0:2d0:200::7/32 的数据包路由到 `policy`.
 
-### SRC-IP-CIDR 源IP段地址
+#### SRC-IP-CIDR 源IP段地址
 SRC-IP-CIDR 规则用于根据数据包的源 IPv4 地址路由数据包.
 
 `SRC-IP-CIDR,192.168.1.201/32,DIRECT` 将任何源 IP 地址为 192.168.1.201/32 的数据包路由到 `DIRECT`.
 
-### SRC-PORT 源端口
+#### SRC-PORT 源端口
 SRC-PORT 规则用于根据数据包的源端口路由数据包.
 
 `SRC-PORT,80,policy` 将任何源端口为 80 的数据包路由到 `policy`.
 
-### DST-PORT 目标端口
+#### DST-PORT 目标端口
 DST-PORT 规则用于根据数据包的目标端口路由数据包.
 
 `DST-PORT,80,policy` 将任何目标端口为 80 的数据包路由到 `policy`.
 
-### PROCESS-NAME 源进程名
+#### PROCESS-NAME 源进程名
 PROCESS-NAME 规则用于根据发送数据包的进程名称路由数据包.
 
 > <font color=#d1a336> **Warning**<br>
@@ -107,7 +110,7 @@ PROCESS-NAME 规则用于根据发送数据包的进程名称路由数据包.
 
 `PROCESS-NAME,nc,DIRECT` 将任何来自进程 nc 的数据包路由到 `DIRECT`.
 
-### PROCESS-PATH 源进程路径
+#### PROCESS-PATH 源进程路径
 PROCESS-PATH 规则用于根据发送数据包的进程路径路由数据包.
 
 > <font color=#d1a336> **Warning**<br>
@@ -116,7 +119,7 @@ PROCESS-PATH 规则用于根据发送数据包的进程路径路由数据包.
 
 `PROCESS-PATH,/usr/local/bin/nc,DIRECT` 将任何来自路径为 /usr/local/bin/nc 的进程的数据包路由到 `DIRECT`.
 
-### IPSET IP集(*仅Linux*)
+#### IPSET IP集(*仅Linux*)
 IPSET 规则用于根据 IP 集匹配并路由数据包. 根据 IPSET 的官方网站 的介绍:
 
 > IP 集是 Linux 内核中的一个框架, 可以通过 ipset 程序进行管理. 根据类型, IP 集可以存储 IP 地址、网络、 (TCP/UDP) 端口号、MAC 地址、接口名称或它们以某种方式的组合, 以确保在集合中匹配条目时具有闪电般的速度.
@@ -129,7 +132,7 @@ IPSET 规则用于根据 IP 集匹配并路由数据包. 根据 IPSET 的官方�
 
 `IPSET,chnroute,policy` 将任何目标 IP 地址在 IP 集 chnroute 中的数据包路由到 `policy`.
 
-### [RULE-SET 规则集](https://a76yyyy.github.io/clash/zh_CN/configuration/rules.html#rule-set-%E8%A7%84%E5%88%99%E9%9B%86)
+#### [RULE-SET 规则集](https://a76yyyy.github.io/clash/zh_CN/configuration/rules.html#rule-set-%E8%A7%84%E5%88%99%E9%9B%86)
 
 RULE-SET 规则用于根据 [Rule Providers 规则集](https://a76yyyy.github.io/clash/zh_CN/premium/rule-providers.html) 的结果路由数据包. 当 Clash 使用此规则时, 它会从指定的 Rule Providers 规则集中加载规则, 然后将数据包与规则进行匹配. 如果数据包与任何规则匹配, 则将数据包路由到指定的策略, 否则跳过此规则.
 
@@ -139,7 +142,7 @@ RULE-SET 规则用于根据 [Rule Providers 规则集](https://a76yyyy.github.io
 
 `RULE-SET,my-rule-provider,DIRECT` 从 `my-rule-provider` 加载所有规则
 
-### [SCRIPT 脚本](https://a76yyyy.github.io/clash/zh_CN/configuration/rules.html#script-%E8%84%9A%E6%9C%AC)
+#### [SCRIPT 脚本](https://a76yyyy.github.io/clash/zh_CN/configuration/rules.html#script-%E8%84%9A%E6%9C%AC)
 
 SCRIPT 规则用于根据脚本的结果路由数据包. 当 Clash 使用此规则时, 它会执行指定的脚本, 然后将数据包路由到脚本的输出.
 
@@ -149,13 +152,13 @@ SCRIPT 规则用于根据脚本的结果路由数据包. 当 Clash 使用此规�
 
 `SCRIPT,script-path,DIRECT` 将数据包路由到脚本 `script-path` 的输出.
 
-### MATCH 全匹配
+#### MATCH 全匹配
 
 MATCH 规则用于路由剩余的数据包. 该规则是必需的, 通常用作最后一条规则.
 
 `MATCH,DIRECT` 将剩余的数据包路由到 `DIRECT`
 
-# [Rule Providers 规则集](https://a76yyyy.github.io/clash/zh_CN/premium/rule-providers.html)
+## [Rule Providers 规则集](https://a76yyyy.github.io/clash/zh_CN/premium/rule-providers.html)
 
 Rule Providers 规则集和 [Proxy Providers 代理集](https://a76yyyy.github.io/clash/zh_CN/configuration/outbound.html#proxy-providers-%E4%BB%A3%E7%90%86%E9%9B%86) 基本相同. 使用户可以动态加载代理服务器列表, 而不是在配置文件中硬编码.
 
@@ -163,26 +166,22 @@ Rule Providers 规则集和 [Proxy Providers 代理集](https://a76yyyy.github.i
 
 ```yaml
 rule-providers:
-  apple:
-    behavior: "domain" # domain, ipcidr or classical (仅限 Clash Premium 内核)
+  google:
     type: http
-    url: "url"
-    # format: 'yaml' # or 'text'
-    interval: 3600
-    path: ./apple.yaml
-  microsoft:
-    behavior: "domain"
-    type: file
-    path: /microsoft.yaml
-
-rules:
-  - RULE-SET,apple,REJECT
-  - RULE-SET,microsoft,policy
+    behavior: classical       # domain / ipcidr / classical
+    format: yaml
+    # 由于安全问题，此路径将限制只允许在 HomeDir（有启动参数 -d 配置） 中，
+    # 如果想存储到任意位置配置环境变量 `SKIP_SAFE_PATH_CHECK=1`
+    # path可为空(仅限clash.meta 1.15.0以上版本)
+    path: ./rule1.yaml 
+    #【Meta专属】URL可根据rule设定匹配对应的策略，方便更新provider
+    url: "https://raw.githubusercontent.com/../Google.yaml"
+    interval: 600
   ```
 
 有三种行为类型可用:
 
-## `domain`
+### `domain`
 
 ```yaml
 payload:
@@ -196,7 +195,7 @@ payload:
 *.*.microsoft.com
 books.itunes.apple.com
 ```
-## `ipcidr`
+### `ipcidr`
 
 ```yaml
 payload:
@@ -209,7 +208,7 @@ payload:
 10.0.0.0.1/32
 ```
 
-## `classical`
+### `classical`
 
 ```yaml
 payload:

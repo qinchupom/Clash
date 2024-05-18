@@ -1,15 +1,15 @@
-# Bing
-
-r.bing.com
-th.bing.com
-www.bing.com
-business.bing.com
-www2.bing.com
-sydney.bing.com
-+.bingapis.com
-gateway.bingviz.microsoft.net
-gateway.bingviz.microsoftapp.net
-+.bing-shopping.microsoft-falcon.io
-+.edgeservices.bing.com
-copilot.microsoft.com
-self.events.data.microsoft.com
+# Bing搜索
+payload:
+  - 'r.bing.com'
+  - 'th.bing.com'
+  - 'www.bing.com'
+  - 'business.bing.com'
+  - 'www2.bing.com'
+  - 'sydney.bing.com'
+  - '+.bingapis.com'
+  - 'gateway.bingviz.microsoft.net'
+  - 'gateway.bingviz.microsoftapp.net'
+  - '+.bing-shopping.microsoft-falcon.io'
+  - '+.edgeservices.bing.com'
+  - 'copilot.microsoft.com'
+  - 'self.events.data.microsoft.com'

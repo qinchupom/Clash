@@ -1,4 +1,5 @@
 # jav自用
+# 69书吧
 payload:
   - DOMAIN-SUFFIX,ggjav.com
   - DOMAIN-SUFFIX,anix.moe
@@ -6,3 +7,4 @@ payload:
   - DOMAIN-KEYWORD,javbus
   - DOMAIN-KEYWORD,javmenu
   - DOMAIN-KEYWORD,xslist
+  - DOMAIN-KEYWORD,69shuba

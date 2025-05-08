@@ -1,15 +1,15 @@
 # Bing搜索
 payload:
-  - 'r.bing.com'
-  - 'th.bing.com'
-  - 'www.bing.com'
-  - 'business.bing.com'
-  - 'www2.bing.com'
-  - 'sydney.bing.com'
-  - '+.bingapis.com'
-  - 'gateway.bingviz.microsoft.net'
-  - 'gateway.bingviz.microsoftapp.net'
-  - '+.bing-shopping.microsoft-falcon.io'
-  - '+.edgeservices.bing.com'
-  - 'copilot.microsoft.com'
-  - 'self.events.data.microsoft.com'
+  - DOMAIN,r.bing.com
+  - DOMAIN,th.bing.com
+  - DOMAIN,www.bing.com
+  - DOMAIN,business.bing.com
+  - DOMAIN,www2.bing.com
+  - DOMAIN,sydney.bing.com
+  - DOMAIN-SUFFIX,bingapis.com
+  - DOMAIN,gateway.bingviz.microsoft.net
+  - DOMAIN,gateway.bingviz.microsoftapp.net
+  - DOMAIN-SUFFIX,bing-shopping.microsoft-falcon.io
+  - DOMAIN-SUFFIX,edgeservices.bing.com
+  - DOMAIN,copilot.microsoft.com
+  - DOMAIN,self.events.data.microsoft.com
